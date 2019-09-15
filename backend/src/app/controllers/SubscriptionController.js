@@ -1,4 +1,5 @@
 import { Op } from 'sequelize';
+import * as Yup from 'yup';
 
 import Meetup from '../models/Meetup';
 import User from '../models/User';
@@ -42,6 +43,14 @@ class SubscriptionController {
 	}
 
 	async store(req, res) {
+		const schema = Yup.object().shape({
+			meetup_id: Yup.number().required(),
+		});
+
+		if (!(await schema.isValid(req.body))) {
+			return res.status(400).json({ error: 'Validation fails' });
+		}
+
 		const meetup = await Meetup.findOne({ where: { id: req.body.meetup_id } });
 
 		/**
