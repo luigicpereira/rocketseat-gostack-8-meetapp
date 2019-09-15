@@ -1,4 +1,3 @@
-import { isBefore } from 'date-fns';
 import { Op } from 'sequelize';
 
 import Meetup from '../models/Meetup';
@@ -17,7 +16,7 @@ class SubscriptionController {
 				{
 					model: Meetup,
 					as: 'meetup',
-					attributes: ['title', 'description', 'location', 'date'],
+					attributes: ['id', 'title', 'description', 'location', 'date'],
 					where: {
 						date: {
 							[Op.gte]: new Date(),
@@ -64,7 +63,7 @@ class SubscriptionController {
 		/**
 		 * Check if meetup already happened
 		 */
-		if (isBefore(meetup.date, new Date())) {
+		if (meetup.past) {
 			return res.status(400).json({ error: 'This meetup already happened' });
 		}
 

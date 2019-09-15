@@ -21,7 +21,7 @@ class ScheduleController {
 				},
 			},
 			order: ['date'],
-			attributes: ['title', 'description', 'location', 'date'],
+			attributes: ['id', 'title', 'description', 'location', 'date'],
 			limit: 10,
 			offset: (page - 1) * 10,
 			include: [

@@ -42,7 +42,7 @@ class MeetupController {
 				.json({ error: 'This meetup is organized by another user' });
 		}
 
-		if (isBefore(meetup.date, new Date())) {
+		if (meetup.past) {
 			return res.status(400).json({ error: 'This meetup already happened' });
 		}
 
